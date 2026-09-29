@@ -43,7 +43,7 @@ class _DetailMealState extends State<DetailMeal> {
       body: FutureBuilder<MealModel>(
         future: mealDetail,
         builder: (context, snapshot) {
-          if (snapshot.hasError) { // 1. Kondisi jika terjadi Error
+          if (snapshot.hasError) {
             return Center(
               child: Text(
                 "Error: ${snapshot.error}",
@@ -51,20 +51,21 @@ class _DetailMealState extends State<DetailMeal> {
               ),
             );
           }
-          if (!snapshot.hasData) { // 2. Kondisi saat masih Loading
+          if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.orange),
             );
           }
 
-          var meal = snapshot.data!; // 3. Kondisi Sukses
+          var meal = snapshot.data!;
           return CustomScrollView(
             slivers: [
+              // Header Gambar Makanan
               SliverAppBar(
                 expandedHeight: 300,
                 pinned: true,
                 backgroundColor: const Color(0xFF1E1E1E),
-                leading: Container( // Tombol Back berbentuk lingkaran transparan
+                leading: Container(
                   margin: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
                     color: Colors.black54,
@@ -83,12 +84,14 @@ class _DetailMealState extends State<DetailMeal> {
                 ),
               ),
 
+              // Konten Detail Makanan
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Judul Makanan
                       Text(
                         meal.nama,
                         style: const TextStyle(
@@ -99,6 +102,7 @@ class _DetailMealState extends State<DetailMeal> {
                       ),
                       const SizedBox(height: 10),
 
+                      // Badge Kategori
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 12,
@@ -122,6 +126,59 @@ class _DetailMealState extends State<DetailMeal> {
                       Divider(color: Colors.grey.shade800),
                       const SizedBox(height: 16),
 
+                      // Section 1: Bahan-Bahan & Takaran
+                      const Row(
+                        children: [
+                          Icon(
+                            Icons.shopping_bag_outlined,
+                            color: Colors.orange,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            "Bahan-Bahan & Takaran",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+
+                      // Listing Bahan-Bahan
+                      Column(
+                        children: meal.bahanBahan.map((bahan) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 8,
+                                  color: Colors.orange,
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: Text(
+                                    bahan,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey.shade300,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+
+                      const SizedBox(height: 24),
+                      Divider(color: Colors.grey.shade800),
+                      const SizedBox(height: 16),
+
+                      // Section 2: Langkah-Langkah Memasak
                       const Row(
                         children: [
                           Icon(
@@ -141,6 +198,7 @@ class _DetailMealState extends State<DetailMeal> {
                       ),
                       const SizedBox(height: 12),
 
+                      // Teks Instruksi
                       Text(
                         meal.instruksi,
                         style: TextStyle(

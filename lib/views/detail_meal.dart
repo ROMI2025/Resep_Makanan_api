@@ -43,7 +43,7 @@ class _DetailMealState extends State<DetailMeal> {
       body: FutureBuilder<MealModel>(
         future: mealDetail,
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
+          if (snapshot.hasError) { // 1. Kondisi jika terjadi Error
             return Center(
               child: Text(
                 "Error: ${snapshot.error}",
@@ -51,20 +51,20 @@ class _DetailMealState extends State<DetailMeal> {
               ),
             );
           }
-          if (!snapshot.hasData) {
+          if (!snapshot.hasData) { // 2. Kondisi saat masih Loading
             return const Center(
               child: CircularProgressIndicator(color: Colors.orange),
             );
           }
 
-          var meal = snapshot.data!;
+          var meal = snapshot.data!; // 3. Kondisi Sukses
           return CustomScrollView(
             slivers: [
               SliverAppBar(
                 expandedHeight: 300,
                 pinned: true,
                 backgroundColor: const Color(0xFF1E1E1E),
-                leading: Container(
+                leading: Container( // Tombol Back berbentuk lingkaran transparan
                   margin: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
                     color: Colors.black54,

@@ -18,7 +18,7 @@ class MealModel {
   final String kategori;
   final String foto;
   final String instruksi;
-  final List<String> bahanBahan; // 1. Tambahkan list bahanBahan
+  final List<String> bahanBahan; 
 
   MealModel({
     required this.id,
@@ -26,11 +26,11 @@ class MealModel {
     required this.kategori,
     required this.foto,
     required this.instruksi,
-    required this.bahanBahan, // 2. Daftarkan di constructor
+    required this.bahanBahan, 
   });
 
   factory MealModel.fromJson(Map<String, dynamic> json) {
-    // 3. Looping untuk mengambil strIngredient1..20 dan strMeasure1..20 dari API
+    
     List<String> listBahan = [];
     for (int i = 1; i <= 20; i++) {
       String? ingredient = json['strIngredient$i'];
@@ -51,7 +51,7 @@ class MealModel {
       kategori: json['strCategory'] ?? '',
       foto: json['strMealThumb'] ?? '',
       instruksi: json['strInstructions'] ?? '',
-      bahanBahan: listBahan, // 4. Masukkan hasil looping ke properti model
+      bahanBahan: listBahan, 
     );
   }
 }
